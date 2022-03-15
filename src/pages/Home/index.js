@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   Card, InputSearchContainer, Header, ListContainer,
 } from './styles';
@@ -12,10 +13,12 @@ export default function Home() {
       <InputSearchContainer>
         <input type="text" placeholder="Pesquise pelo nome..." />
       </InputSearchContainer>
+
       <Header>
         <strong>3 contatos</strong>
-        <a href="/">Novo contato</a>
+        <Link to="/new">Novo contato</Link>
       </Header>
+
       <ListContainer>
         <header>
           <button type="button">
@@ -34,52 +37,15 @@ export default function Home() {
             <span>(14) 99875-6610</span>
           </div>
           <div className="actions">
-            <a href="/">
+            <Link to="/edit/123">
               <img src={edit} alt="Edit" />
-            </a>
+            </Link>
             <button type="button">
               <img src={trash} alt="Delete" />
             </button>
           </div>
         </Card>
 
-        <Card>
-          <div className="info">
-            <div className="contact-name">
-              <strong>Lucas Santana</strong>
-              <small>instagram</small>
-            </div>
-            <span>ln.santana08@gmail.com</span>
-            <span>(14) 99875-6610</span>
-          </div>
-          <div className="actions">
-            <a href="/">
-              <img src={edit} alt="Edit" />
-            </a>
-            <button type="button">
-              <img src={trash} alt="Delete" />
-            </button>
-          </div>
-        </Card>
-
-        <Card>
-          <div className="info">
-            <div className="contact-name">
-              <strong>Lucas Santana</strong>
-              <small>instagram</small>
-            </div>
-            <span>ln.santana08@gmail.com</span>
-            <span>(14) 99875-6610</span>
-          </div>
-          <div className="actions">
-            <a href="/">
-              <img src={edit} alt="Edit" />
-            </a>
-            <button type="button">
-              <img src={trash} alt="Delete" />
-            </button>
-          </div>
-        </Card>
       </ListContainer>
     </>
   );
