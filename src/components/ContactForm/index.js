@@ -14,22 +14,22 @@ export default function ContactForm({ buttonLabel }) {
   const [category, setCategory] = useState('');
   const [errors, setErrors] = useState([]);
 
-  const handleNameChange = (event) => {
+  function handleNameChange(event) {
     setName(event.target.value);
 
     if (!event.target.value) {
       setErrors((prevState) => [
         ...prevState,
-        { field: 'email', message: 'Nome é obrigatório.' },
+        { field: 'name', message: 'Nome é obrigatório.' },
       ]);
     } else {
       setErrors((prevState) => prevState.filter(
-        (error) => error.field !== 'email',
+        (error) => error.field !== 'name',
       ));
     }
-  };
+  }
 
-  const handleEmailChange = (event) => {
+  function handleEmailChange(event) {
     setEmail(event.target.value);
 
     if (event.target.value && !isEmailValid(event.target.value)) {
@@ -48,29 +48,35 @@ export default function ContactForm({ buttonLabel }) {
         (error) => error.field !== 'email',
       ));
     }
-  };
+  }
 
-  const handleSubmit = (e) => {
+  function getErrorMessageByFieldName(fieldName) {
+    return errors.find((error) => error.field === fieldName)?.message;
+  }
+
+  function handleSubmit(e) {
     e.preventDefault();
     // eslint-disable-next-line no-console
     console.log({
       name, email, phone, category,
     });
-  };
+  }
 
   return (
     <Form onSubmit={handleSubmit}>
 
-      <FormGroup error={errors.field?.[name]}>
+      <FormGroup error={getErrorMessageByFieldName('name')}>
         <Input
+          error={getErrorMessageByFieldName('name')}
           placeholder="Nome"
           value={name}
           onChange={handleNameChange}
         />
       </FormGroup>
 
-      <FormGroup>
+      <FormGroup error={getErrorMessageByFieldName('email')}>
         <Input
+          error={getErrorMessageByFieldName('email')}
           placeholder="E-mail"
           value={email}
           onChange={handleEmailChange}
