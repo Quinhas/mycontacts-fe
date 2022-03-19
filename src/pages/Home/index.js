@@ -4,26 +4,36 @@ import {
   Card, InputSearchContainer, Header, ListHeader,
 } from './styles';
 
+import Loader from '../../components/Loader';
+
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trash from '../../assets/images/icons/trash.svg';
+import delay from '../../utils/delay';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
   const [orderBy, setOrderBy] = useState('ASC');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const filteredContacts = useMemo(() => contacts.filter((contact) => (
     contact.name.toUpperCase()).includes(searchTerm.toUpperCase())), [contacts, searchTerm]);
 
   useEffect(() => {
+    setIsLoading(true);
     fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`)
       .then(async (response) => {
+        await delay(2000);
+
         const json = await response.json();
         setContacts(json);
       })
       .catch((error) => {
         console.log('erro', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [orderBy]);
 
@@ -37,6 +47,7 @@ export default function Home() {
 
   return (
     <>
+      <Loader isLoading={isLoading} />
       <InputSearchContainer>
         <input
           value={searchTerm}
@@ -59,7 +70,7 @@ export default function Home() {
       {filteredContacts.length > 0
         && (
           <ListHeader orderBy={orderBy}>
-            <button type="button" onClick={handleToggleOrderBy}>
+            <button type="button" onClick={handleToggleOrderBy} disabled={isLoading}>
               <span>Nome</span>
               <img src={arrow} alt="Arrow" />
             </button>
