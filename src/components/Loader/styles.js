@@ -40,7 +40,7 @@ export const Overlay = styled.div`
   justify-content: center;
   background: rgba(246, 245, 252, 0.7);
   backdrop-filter: blur(3px);
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
