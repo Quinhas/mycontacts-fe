@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useMemo, useState } from 'react';
+import {
+  useCallback, useEffect, useMemo, useState,
+} from 'react';
 import {
   Card, InputSearchContainer, Header, ListHeader, ErrorContainer,
 } from './styles';
@@ -23,7 +25,7 @@ export default function Home() {
   const filteredContacts = useMemo(() => contacts.filter((contact) => (
     contact.name.toUpperCase()).includes(searchTerm.toUpperCase())), [contacts, searchTerm]);
 
-  async function loadContacts() {
+  const loadContacts = useCallback(async () => {
     try {
       setIsLoading(true);
       const contactsList = await ContactsService.listContacts(orderBy);
@@ -34,11 +36,11 @@ export default function Home() {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, [orderBy]);
 
   useEffect(() => {
     loadContacts();
-  }, [orderBy]);
+  }, [loadContacts]);
 
   function handleToggleOrderBy() {
     setOrderBy((prevState) => (prevState === 'ASC' ? 'DESC' : 'ASC'));
