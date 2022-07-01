@@ -1,22 +1,22 @@
 /* eslint-disable react/jsx-one-expression-per-line */
+import {
+  useCallback, useEffect, useMemo, useState
+} from 'react';
 import { Link } from 'react-router-dom';
 import {
-  useCallback, useEffect, useMemo, useState,
-} from 'react';
-import {
-  Card, InputSearchContainer, Header, ListHeader,
-  ErrorContainer, EmptyListContainer, SearchNotFoundContainer,
+  Card, EmptyListContainer, ErrorContainer, Header, InputSearchContainer,
+  ListHeader, SearchNotFoundContainer
 } from './styles';
 
-import Loader from '../../components/Loader';
 import Button from '../../components/Button';
+import Loader from '../../components/Loader';
 
+import emptyBox from '../../assets/images/empty-box.svg';
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trash from '../../assets/images/icons/trash.svg';
-import sad from '../../assets/images/sad.svg';
-import emptyBox from '../../assets/images/empty-box.svg';
 import magnifierQuestion from '../../assets/images/magnifier-question.svg';
+import sad from '../../assets/images/sad.svg';
 import ContactsService from '../../services/ContactsService';
 
 export default function Home() {

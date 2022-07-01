@@ -14,7 +14,7 @@ export default function NewContact() {
       const response = await ContactsService.createContact(contact);
       console.log(response);
     } catch (error) {
-      alert('Ocorreu um erro ao cadastrao o contato!');
+      alert('Ocorreu um erro ao cadastrar o contato!');
     }
   }
 

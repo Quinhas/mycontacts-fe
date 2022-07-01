@@ -6,32 +6,24 @@ class HttpClient {
     this.baseURL = baseURL;
   }
 
-  async get(endpoint) {
+  async makeRequest(endpoint, options) {
     await delay(500);
 
-    const response = await fetch(`${this.baseURL}/${endpoint}`);
+    const headers = new Headers();
 
-    let body = null;
-    const contentType = response.headers.get('Content-Type');
-    if (contentType.includes('application/json')) {
-      body = await response.json();
+    if (options.body) {
+      headers.append('Content-Type', 'application/json');
     }
 
-    if (response.ok) {
-      return body;
+    if (options.headers) {
+      Object.entries(options.headers).forEach(([name, value]) => {
+        headers.append(name, value);
+      });
     }
-
-    throw new APIError(response.body);
-  }
-
-  async post(endpoint, body) {
-    await delay(500);
-
-    const headers = new Headers({ 'Content-Type': 'application/json' });
 
     const response = await fetch(`${this.baseURL}/${endpoint}`, {
-      method: 'POST',
-      body: JSON.stringify(body),
+      method: options.method,
+      body: JSON.stringify(options.body),
       headers,
     });
 
@@ -46,6 +38,28 @@ class HttpClient {
     }
 
     throw new APIError(response, responseBody);
+  }
+
+  get(endpoint, options) {
+    return this.makeRequest(endpoint, {
+      method: 'GET',
+      headers: options?.headers,
+    });
+  }
+
+  post(endpoint, options) {
+    return this.makeRequest(endpoint, {
+      method: 'POST',
+      body: options?.body,
+      headers: options?.headers,
+    });
+  }
+
+  put(endpoint, body) {
+    return this.makeRequest(endpoint, {
+      method: 'PUT',
+      body,
+    });
   }
 }
 

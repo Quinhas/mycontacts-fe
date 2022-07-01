@@ -40,6 +40,13 @@
       {
         "allowEmptyCatch": true
       }
-    ]
+    ],
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "never",
+      "exports": "always-multiline",
+      "functions": "always-multiline"
+  }]
   }
 }
