@@ -31,6 +31,7 @@ export default function Home() {
 
   const loadContacts = useCallback(async () => {
     try {
+      console.log('oi');
       setIsLoading(true);
       const contactsList = await ContactsService.listContacts(orderBy);
       setHasError(false);
