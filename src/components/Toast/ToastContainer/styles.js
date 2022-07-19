@@ -6,5 +6,4 @@ export const Container = styled.div`
   bottom: 48px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 0.5rem 1rem;
 `;
